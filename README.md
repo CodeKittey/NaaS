@@ -10,8 +10,6 @@ Here is the incredible API:
 ## Integers
 
 #### GET api/int
-Return an Integer. You can set boundaries for min and max:
-(The Default Value for min is 0 and for max 1000)
 
 Example:
 *http://localhost:1337/api/int?max=1111&min=11*
@@ -21,7 +19,6 @@ And what you get is an incredible JSON:
 ```javascript
 {"type":"int","value":1090,"max":1111,"min":11}
 ```
-
 #### GET api/int/:id
 Gets your own created int by ID.
 *NOT YET IMPLEMENTED*
@@ -37,8 +34,6 @@ Deleting an Integer you've created.
 ## Floats
 
 #### GET api/float
-Return an Integer. You can set boundaries for min and max:
-(Default Value for min is 0 and for max 1000)
 You even can define the precision:
 (Default Value is 2 and can't be longer than 20)
 
@@ -48,7 +43,7 @@ Example:
 And what you get is an incredible JSON:
 
 ```javascript
-{"type":"float","value":"1006.598","precision":3,"max":1337,"min":13}
+{"type":"float","value":1006.598,"precision":3,"max":1337,"min":13}
 ```
 
 #### GET api/float/:id
@@ -62,3 +57,18 @@ Creates your own awesome float
 #### DELETE api/float
 Deleting an Double you've created.
 *NOT YET IMPLEMENTED*
+
+####  Common APIs
+
+Every GET-Request has:
+- A *min*,*max* Param for boundaries: (Default Value for min is 0 and for max 1000)
+*?max=1337&min=13*
+- A *allowNegative* Param (true or false) for getting Numbers less than zero (Default Value is false).
+*?allowNegative=true*
+- A *count* Param if you want more than one number at the same time, you'll get an Array (Default is 1 and can't be more than 121)
+*&count=11*
+
+What you get:
+```javascript
+{"type":"float","value":[74.2,794.3,406.7,1201.2,644.8,540.3,288.7,830.1,903.8,784.9,729.1],"precision":1,"max":1337,"min":13}
+```

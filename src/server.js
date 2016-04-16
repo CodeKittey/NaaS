@@ -30,9 +30,17 @@ app.use(router.allowedMethods());
 
  router.get('/api/int', async (ctx, next) => {
 	var query = ctx.query;
-	var min = parseInt(query['min']) || 0;
-	var max = parseInt(query['max']) || 1000;
-	var data = parseInt(Math.floor(Math.random() * (max - min)) + min);
+	var allowNegative = query['allowNegative'] === 'true';
+
+	var max = parseInt(query['max'], 10) || 1000;
+	var min = (parseInt(query['min'], 10) || 0) < 0 && allowNegative !== true ? 0 : (parseInt(query['min'], 10) || 0);
+	var count = parseInt(query['count'], 10)  < 122 ? parseInt(query['count'], 10) : 1;
+
+	var arrInt = []; arrInt.length = count;
+	var i = 0;
+	while ( i < count ) { arrInt[i] = parseInt(Math.floor(Math.random() * (max - min)) + min, 10); i++; }
+
+	var data = count > 1 ? arrInt : arrInt[0];
 
 	if (data !== null) {
 
@@ -50,7 +58,7 @@ app.use(router.allowedMethods());
 
 router.get('/api/int/:id', async (ctx, next) => {
 
-	var data = parseInt(ctx.params.id);
+	var data = parseInt(ctx.params.id, 10);
 //TODO: get IntSavedBefore
 	if (data !== null) {
 
@@ -68,12 +76,18 @@ router.get('/api/int/:id', async (ctx, next) => {
 
 router.get('/api/float', async (ctx, next) => {
 	var query = ctx.query;
-	var precision = ((parseInt(query['precision']) < 21) ? parseInt(query['precision']) : 2);
+	var precision = ((parseInt(query['precision'], 10) < 21) ? parseInt(query['precision']) : 2);
+	var allowNegative = query['allowNegative'] === 'true';
 
-	var min = parseInt(query['min']) || 0;
-	var max = parseInt(query['max']) || 1000;
+	var min = (parseInt(query['min'], 10) || 0) < 0 && allowNegative !== true ? 0 : (parseInt(query['min'], 10) || 0);
+	var max = parseInt(query['max'], 10) || 1000;
+	var count = parseInt(query['count'], 10) < 122 ? parseInt(query['count'], 10) : 1;
 
-	var data = ((Math.random() * (max - min)) + min).toFixed(precision);
+	var arrFloat = []; arrFloat.length = count;
+	var i = 0;
+	while ( i < count ) { arrFloat[i] = parseFloat(((Math.random() * (max - min)) + min).toFixed(precision)); i++; }
+
+	var data = count > 1 ? arrFloat : arrFloat[0];
 
 	if (data !== null) {
 
@@ -91,10 +105,10 @@ router.get('/api/float', async (ctx, next) => {
 
 router.get('/api/float/:id', async (ctx, next) => {
 	var query = ctx.query;
-	var precision = parseInt(query['precision']) || 2;
+	var precision = parseInt(query['precision'], 10) || 2;
 	var id = parseFloat(ctx.params.id);
 	//TODO get the saved float
-	var data = id.toFixed(precision);
+	var data = parseFloat(id.toFixed(precision));
 	if (data !== null) {
 
 		ctx.body   = {type: 'float', value: data, precision: precision};

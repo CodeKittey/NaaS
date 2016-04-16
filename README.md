@@ -12,7 +12,9 @@ Here is the incredible API:
 #### GET api/int
 
 Example:
-*http://localhost:1337/api/int?max=1111&min=11*
+```bash
+http://localhost:1337/api/int?max=1111&min=11
+```
 
 And what you get is an incredible JSON:
 
@@ -38,8 +40,9 @@ You even can define the precision:
 (Default Value is 2 and can't be longer than 20)
 
 Example:
-*http://localhost:1337/api/float?max=1337&min=13&precision=3*
-
+```bash
+http://localhost:1337/api/float?max=1337&min=13&precision=3
+```
 And what you get is an incredible JSON:
 
 ```javascript
@@ -62,12 +65,17 @@ Deleting an Double you've created.
 
 Every GET-Request has:
 - A *min*,*max* Param for boundaries: (Default Value for min is 0 and for max 1000)
-*?max=1337&min=13*
+```bash
+?max=1337&min=13
+```
 - A *allowNegative* Param (true or false) for getting Numbers less than zero (Default Value is false).
-*?allowNegative=true*
+```bash
+?allowNegative=true
+```
 - A *count* Param if you want more than one number at the same time, you'll get an Array (Default is 1 and can't be more than 121)
-*&count=11*
-
+```bash
+&count=11
+```
 What you get:
 ```javascript
 {"type":"float","value":[74.2,794.3,406.7,1201.2,644.8,540.3,288.7,830.1,903.8,784.9,729.1],"precision":1,"max":1337,"min":13}

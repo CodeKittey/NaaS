@@ -24,7 +24,7 @@ app.use(router.allowedMethods());
  * maybe allow negative number
  * different representations for number (string)
  * api for questioning if number is positive oder not
- * ints/doubles in an array
+ * ints and floats as array
  */
 
 
@@ -34,6 +34,24 @@ app.use(router.allowedMethods());
 	var max = parseInt(query['max']) || 1000;
 	var data = parseInt(Math.floor(Math.random() * (max - min)) + min);
 
+	if (data !== null) {
+
+		ctx.body   = {type: 'int', value: data, max: max, min: min};
+		ctx.status = 200;
+
+	} else {
+
+		ctx.body   = { message: 'Status/ not found.' };
+		ctx.status = 404;
+
+	}
+
+});
+
+router.get('/api/int/:id', async (ctx, next) => {
+
+	var data = parseInt(ctx.params.id);
+//TODO: get IntSavedBefore
 	if (data !== null) {
 
 		ctx.body   = {type: 'int', value: data};
@@ -48,35 +66,18 @@ app.use(router.allowedMethods());
 
 });
 
-router.get('/api/int/:id', async (ctx, next) => {
-   var data = null;
-   //TODO: get IntSavedBefore
-   if (data !== null) {
-
-	   ctx.body   = {type: 'int', value: data};
-	   ctx.status = 200;
-
-   } else {
-
-	   ctx.body   = { message: 'Status/ not found.' };
-	   ctx.status = 404;
-
-   }
-
-});
-
-router.get('/api/double', async (ctx, next) => {
+router.get('/api/float', async (ctx, next) => {
 	var query = ctx.query;
-	var dez = parseInt(query['dez']) || 2;
+	var precision = ((parseInt(query['precision']) < 21) ? parseInt(query['precision']) : 2);
+
 	var min = parseInt(query['min']) || 0;
 	var max = parseInt(query['max']) || 1000;
-	var frac = Math.pow(10, dez);
 
-	var data = Math.round((Math.random() * (max - min) + min)*frac)/frac;
+	var data = ((Math.random() * (max - min)) + min).toFixed(precision);
 
 	if (data !== null) {
 
-		ctx.body   = {type: 'double', value: data, dez: dez, max: max, min: min};
+		ctx.body   = {type: 'float', value: data, precision: precision, max: max, min: min};
 		ctx.status = 200;
 
 	} else {
@@ -88,15 +89,15 @@ router.get('/api/double', async (ctx, next) => {
 
 });
 
-router.get('/api/double/:id', async (ctx, next) => {
+router.get('/api/float/:id', async (ctx, next) => {
 	var query = ctx.query;
-	var dez = parseInt(query['dez']) || 2;
-	var frac = Math.pow(10, dez);
-	//TODO get the saved double
-	var data = Math.round((Math.random() * (max - min) + min)*frac)/frac;
+	var precision = parseInt(query['precision']) || 2;
+	var id = parseFloat(ctx.params.id);
+	//TODO get the saved float
+	var data = id.toFixed(precision);
 	if (data !== null) {
 
-		ctx.body   = {type: 'double', value: data, dez: dez};
+		ctx.body   = {type: 'float', value: data, precision: precision};
 		ctx.status = 200;
 
 	} else {

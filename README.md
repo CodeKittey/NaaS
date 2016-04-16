@@ -1,8 +1,8 @@
 # NaaS
 Numbers as a Service
 
-With NaaS you get Integers and Doubles as many as you want.
-You can even save your Integers or Doubles by an ID and get them back
+With NaaS you get Integers and floats as many as you want.
+You can even save your Integers or floats by an ID and get them back
 by calling the ID.
 
 Here is the incredible API:
@@ -34,31 +34,31 @@ Creates your own awesome Integer
 Deleting an Integer you've created.
 *NOT YET IMPLEMENTED*
 
-## Doubles
+## Floats
 
-#### GET api/double
+#### GET api/float
 Return an Integer. You can set boundaries for min and max:
 (Default Value for min is 0 and for max 1000)
-You even can define the decimal places:
-(Default Value is 2)
+You even can define the precision:
+(Default Value is 2 and can't be longer than 20)
 
 Example:
-*http://localhost:1337/api/double?max=1337&min=13&dez=4*
+*http://localhost:1337/api/float?max=1337&min=13&precision=3*
 
 And what you get is an incredible JSON:
 
 ```javascript
-{"type":"double","value":160.2586,"dez":4,"max":1337,"min":13}
+{"type":"float","value":"1006.598","precision":3,"max":1337,"min":13}
 ```
 
-#### GET api/double/:id
+#### GET api/float/:id
 Gets your own created int by ID.
 *NOT YET IMPLEMENTED*
 
-#### POST api/double
-Creates your own awesome Double
+#### POST api/float
+Creates your own awesome float
 *NOT YET IMPLEMENTED*
 
-#### DELETE api/double
+#### DELETE api/float
 Deleting an Double you've created.
 *NOT YET IMPLEMENTED*

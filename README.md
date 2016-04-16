@@ -61,7 +61,7 @@ Creates your own awesome float
 Deleting an Double you've created.
 *NOT YET IMPLEMENTED*
 
-####  Common APIs
+##  Common APIs
 
 Every GET-Request has:
 - A *min*,*max* Param for boundaries: (Default Value for min is 0 and for max 1000)
